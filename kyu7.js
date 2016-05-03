@@ -16,7 +16,7 @@ function bookIsDay(pages,days){
   }
   console.log("left to read: " + (pages-sumOfPages));
   if (sumOfPages < pages){
-    bookIsDay((pages-sumOfPages), days);
+    return bookIsDay((pages-sumOfPages), days);
   }
 }
 
@@ -244,21 +244,94 @@ function checkLottery(ticket, lottery){
 
 
 //========================================
+//Number climber
+function climb(n){
+  var root = new BinaryTree(1);
+  var val = 0, result;
+  while (2 * val < n || 2 * val + 1 < n){
+    addNode(2 * val);
 
+  }
+}
+
+function BinaryTree(val){
+  this.data = val;
+  this.parent = null;
+  this.left = null;
+  this.right = null;
+}
+
+//========================================
+//Coding 3min: Bug in Apple
+function sc(apple){
+  var x, y, row, colume;
+  for (row=0; row<apple.length; row++){
+    for (colume=0; colume<apple[row].length; colume++){
+      if (apple[row][colume] == "B"){
+        return [row, colume];
+      }
+    }
+  }
+  return null;
+}
+
+var apple=[
+["B","A","A","A","A"],
+["A","A","A","A","A"],
+["A","A","A","A","A"],
+["A","A","A","A","A"],
+["A","A","A","A","A"]
+];
+
+sc(apple);
 
 
 //========================================
-
-
+// Credit Card Issuer
+function getIssuer(number) {
+  if (!number) {
+    return "Unknown";
+  }
+  var numStr = number.toString();
+  if ((numStr.length == 13 || numStr.length == 16) && numStr.charAt(0) == "4"){
+    return "VISA"
+  }else if (numStr.length == 15 && (numStr.slice(0,2) == "34" || numStr.slice(0,2) == "37")){
+    return "AMEX";
+  }else if (numStr.length == 16){
+    if (numStr.slice(0, 4) == "6011"){
+      return "Discover";
+    }else if(numStr.slice(0, 2) == "51" || numStr.slice(0, 2) == "52" ||
+            numStr.slice(0, 2) == "53" || numStr.slice(0, 2) == "54"
+            || numStr.slice(0, 2) == "55"){
+      return "Mastercard";
+    }
+  }
+  return "Unknown";
+}
+getIssuer(5105105105105106);
+getIssuer(5105105105105100);
+getIssuer(6011111111111117);
+getIssuer(378282246310005);
+getIssuer(5111111111111111);
+getIssuer(9111111111111111);
+getIssuer(4111111111111111);
 
 
 //========================================
+//Understanding Closure - Basics
+function buildFun(n){
+  var res = [];
+  function packFunc(num){
+    return function(){
+      return num;
+    };
+  }
+  for (var i = 0; i< n; i++){
+    res.push(packFunc(i));
+  }
+}
 
-
-
-//========================================
-
-
+buildFun(5);
 
 
 //========================================
