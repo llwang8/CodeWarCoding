@@ -96,9 +96,46 @@ titleCase('a clash of KINGS', 'a an the of');
 
 
 //========================================
+//Your order, please
 
+function order(words){
+  if (words.length == 0){
+    return "";
+  }
 
+  var arr = words.split(" "), regx = /[\d]/g,
+      i, index, result = [];
 
+  for (i=0; i<arr.length; i++){
+    index = arr[i].match(regx);
+    //console.log(JSON.stringify(index.concat(arr[i])));
+    result.push(index.concat(arr[i]));
+  }
+
+  result.sort(function(a, b){
+    if (a[0] > b[0]){
+        return 1;
+    }else if (a[0] == b[0]){
+        return 0;
+    }else {
+        return -1;
+    }
+  });
+
+  //console.log("after sort: " + JSON.stringify(result));
+  return result.map(function(item){
+    return item[1];
+  }).join(" ");
+
+}
+
+function order2(words){
+    return words.split(' ').sort(function(a, b){
+        return a.match(/d+/g) - b.match(/d+/g);
+    }).join(' ');
+}
+
+order("is2 Thi1s T4est 3a");
 
 
 //========================================

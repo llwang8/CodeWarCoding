@@ -192,7 +192,7 @@ function zebulansNightmare(functionName) {
 
 
 //========================================
-//kata Impossible I - The Impossible Lottery
+//kata Impossible I - The Impossible Lottery  ???
 
 var lotteryTicket = [1,2,3,4,5,6,7,8,9,10];
 var result = generateLottery();
@@ -244,22 +244,34 @@ function checkLottery(ticket, lottery){
 
 
 //========================================
-//Number climber
+//Number climber   ???
 function climb(n){
-  var root = new BinaryTree(1);
-  var val = 0, result;
-  while (2 * val < n || 2 * val + 1 < n){
-    addNode(2 * val);
-
+  var result = [n];
+  if (n === 1 ){
+    return result.reverse();
   }
+
+  if (Number.isInteger((n - 1) / 2)){
+    //result.push((n - 1) / 2);
+    return result.concat(climb((n - 1) / 2));
+  } else {
+    //result.push(n / 2);
+    return result.concat(climb(n / 2));
+  }
+
 }
 
-function BinaryTree(val){
-  this.data = val;
-  this.parent = null;
-  this.left = null;
-  this.right = null;
+function climb2(n){
+  var result = [];
+  while (n){
+    result.push(n);
+    n = n >> 1;
+  }
+  return result.reverse();
 }
+
+climb(10);
+
 
 //========================================
 //Coding 3min: Bug in Apple
@@ -335,6 +347,218 @@ buildFun(5);
 
 
 //========================================
+//Math Object Madness
+
+Math.prototype.ceil = function (x) {
+  return parseInt(x);
+};
+Math.prototype.floor = function(x){
+  return parseInt(x) + 1;
+};
+Math.prototype.round = function(x){
+  return (x-parseInt(x)) > (x-parseInt(x)+1) ? parseInt(x)+1 : parseInt(x);
+};
+Math.prototype.abs = function(x){
+  return x >= 0 ? x : -x;
+};
+Math.prototype.max = function(args[]){
+  return args.reduce(function(max, cur){
+    return max > cur ? max : cur;
+  });
+};
+Math.prototype.min = function(args[]){
+  //var args = Array.prototype.slice.call(arguments);
+  return args.reduce(function(min, cur){
+    return min < cur ? min : cur;
+  });
+};
+Math.prototype.pow(x, y) = function(x,y){
+  var result = 1;
+  for (var i=1; i<=y; i++){
+    result *= x;
+  }
+  return result;
+};
+
+
+
+//========================================
+// Algorithmic predicament - Bug Fixing #9
+
+function highestAge2(group1, group2){
+  var highestName,
+  maxAge = 0,
+  maxAgeName = "",
+  newGroup = {},
+  combGroup = group1.concat(group2);
+  combGroup.sort(function(objA, objB){
+    if (objA.name > objB.name){
+      return 1;
+    }else if (objA.name < objB.name){
+      return -1;
+    }else {
+      return 0;
+    }
+  });
+  //console.log(JSON.stringify(combGroup));
+
+  for(var i=0;i<combGroup.length;i++){
+    //console.log(combGroup[i].name);
+    if(!newGroup[combGroup[i].name])
+      newGroup[combGroup[i].name] = combGroup[i].age;
+    else
+      newGroup[combGroup[i].name] += combGroup[i].age;
+  }
+  //console.log(JSON.stringify(newGroup));
+
+  for (name in newGroup){
+    if (maxAge < newGroup[name]){
+      maxAge = newGroup[name];
+      maxAgeName = name;
+    }
+  }
+  highestName = maxAgeName;
+  return maxAgeName;
+
+}
+
+highestAge([{name:'kay',age:1},{name:'john',age:13},{name:'kay',age:76}],
+           [{name:'john',age:1},{name:'alice',age:77}]);
+
+
+function highestAge(group1, group2){
+  var highestName = {name:'',age:-1},
+  newGroup = [],
+  combGroup = group1.concat(group2);
+
+  for(var i=0;i<combGroup.length;i++) {
+    if(indexOfProp(combGroup[i].name, newGroup) < 0){
+      newGroup.push(combGroup[i])
+    }
+    else {
+      newGroup[indexOfProp(combGroup[i].name, newGroup)].age += combGroup[i].age;
+    }
+  }
+  newGroup = newGroup.sort((p,c) => p.name > c.name ? 1 : p.name < c.name ? -1 : 0)
+
+  highestName = newGroup[0];
+  for(var i=1;i<newGroup.length;i++){
+    if(newGroup[i].age > highestName.age){
+      highestName = newGroup[i];
+    }
+  }
+
+  return highestName.name;
+}
+
+function indexOfProp(value, arrObj){
+  if (!arrObj) {
+    return -1;
+  }
+  for(var i=0;i<arrObj.length;i++){
+    if(arrObj[i].name == value){
+      return i;
+    }
+  }
+  return -1;
+}
+
+highestAge([{name:'kay',age:1},{name:'john',age:130},{name:'kay',age:76}],
+           [{name:'john',age:1},{name:'alice',age:76}]);
+
+highestAge([{name:'kay',age:1},{name:'john',age:13},{name:'kay',age:76}],
+           [{name:'john',age:1},{name:'alice',age:77}]);
+
+highestAge([{name:'kay',age:1},{name:'john',age:13},{name:'kay',age:76}],
+           [{name:'john',age:1},{name:'alice',age:76}]);
+
+//========================================
+//Reducing Problem - Bug Fixing #8
+
+function calculateTotal(team1, team2) {
+  /*
+  if (!team1){
+    return false;
+  }
+  if (!team2){
+    return true;
+  }
+  */
+  function reduceTotal(arr){
+    return arr.reduce(function(total, cur){
+      return total + cur;
+    }, 0);
+  }
+  return reduceTotal(team1) > reduceTotal(team2);
+}
+
+function calculateTotal1(team1, team2){
+  var t1s = team1.reduce((t, c) => t + c, 0);
+  var t2s = team2.reduct((t, c) => t + c, 0);
+}
+function calculateTotal2(team1, team2){
+  var f = ((t, c) => t + c);
+  return team1.reduce(f, 0) > team2.reduce(f, 0);
+}
+function calculateTotal3(team1, team2){
+  const sum = (a) => a.reduct((a, b) => a + b, 0);
+  calculateTotal = (team1, team2) => sum(team1) > sum(team2);
+}
+
+calculateTotal([1,2,2],[1,0,0]);
+
+//========================================
+//Class conumdrum - Bug Fixing #7
+var List = function(type){
+    this.type = type;
+    this.items = [];
+    this.count = 0;
+  }
+
+List.prototype.add = function(item){
+    if(typeof item != this.type){
+      return "This item is not of type: " + this.type;
+    }
+    this.items.push(item);
+    this.count ++;
+    return this;
+}
+List.prototype.count = function(){
+  return this.count;
+}
+
+ var myList = new List('string');
+ myList.add('Hello').count;
+ myList.add(5);
+ myList.add(' ').add('World!').count;
+
+//========================================
+//Failed Filter - Bug Fixing #3
+function filterWords(phrase){
+  var replaceWord;
+  if (phrase.search(/([a-zA-Z]+ish)/) > 0){
+    replaceWord = "awesomeish";
+  }else {
+    replaceWord = "awesome";
+  }
+  return phrase.replace(/\b(bad(ish)?|mean(ish)?|ugly(ish)?|horrible(ish)?|hideous(ish)?)\b/gi, replaceWord);
+  //return phrase.replace(/(\bbad\b|\bmean(ish)?\b|\bugly\b|\bhorrible\b|\bhideous\b)/gi,'awesome');
+
+}
+
+filterWords("You're Bad! timmy!")
+//========================================
+
+
+
+//========================================
+
+
+//========================================
+
+
+
+//========================================
 
 
 
@@ -347,6 +571,15 @@ buildFun(5);
 
 
 
+//========================================
+
+
+
+//========================================
+
+
+
+//========================================
 
 
 
