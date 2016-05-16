@@ -139,16 +139,31 @@ order("is2 Thi1s T4est 3a");
 
 
 //========================================
+//Shop Inventory Manager
 
 
 
 
 
 //========================================
+//Unique In Order
+var uniqueInOrder=function(iterable){
+  var result = [];
+  var arr = [];
+  if (typeof iterable == "string"){
+    arr = iterable.split("");
+  }
+  arr = iterable;
+  for (var i=0; i<arr.length; i++){
+    while (arr[i] === arr [i + 1]){
+      i++;
+    }
+    result.push(arr[i]);
+  }
+  return result;
+};
 
-
-
-
+uniqueInOrder("aabbccc");
 
 //========================================
 

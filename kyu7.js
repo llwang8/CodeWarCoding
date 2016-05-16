@@ -248,15 +248,17 @@ function checkLottery(ticket, lottery){
 function climb(n){
   var result = [n];
   if (n === 1 ){
-    return result.reverse();
+    return result;
   }
 
   if (Number.isInteger((n - 1) / 2)){
-    //result.push((n - 1) / 2);
-    return result.concat(climb((n - 1) / 2));
+    return result.concat(climb((n - 1) / 2)).sort(function(a, b){
+      return a - b;
+    });
   } else {
-    //result.push(n / 2);
-    return result.concat(climb(n / 2));
+    return result.concat(climb(n / 2)).sort(function(a, b){
+      return a - b;
+    });
   }
 
 }
