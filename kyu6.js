@@ -163,25 +163,194 @@ var uniqueInOrder=function(iterable){
   return result;
 };
 
-uniqueInOrder("aabbccc");
+uniqueInOrder("aabbcccd");
 
 //========================================
+//Calculate Hypotenuse of Right-angled triangle
 
+function calculateHypotenuse(a,b){
+  // TODO: complete calculateHypotenuse so that it returns the hypotenuse length
+  // for a triangle with sides of length a, b, and c, where c is the hypotenuse.
+  // The solution should verify that inputs are valid numbers (both above zero).
+  if (isNaN(a) || typeof a != "number" || a <= 0 || isNaN(b) || typeof b != "number" || b <= 0){
+    throw new Error("Invalid Input");
+  }
+  return Math.sqrt(a * a + b * b).toFixed(3);
+
+}
+
+calculateHypotenuse(3, 4);
+
+//========================================
+//"this"  is an other problem
+function NamedOne(first, last) {
+// -- SHOULD be changed --
+    this.firstName = first;
+    this.lastName = last;
+    Object.defineProperty(this, "fullName", {
+      set: function(value){
+        var nameArr = value.split(' ');
+        if (nameArr.length === 2){
+          this.firstName = nameArr[0];
+          this.lastName = nameArr[1];
+        }
+      },
+      get: function(){
+        return this.firstName + " " + this.lastName;
+      }
+    });
+}
+
+var namedOne = new NamedOne("Naomi","Wang")
+namedOne.firstName // -> "Naomi"
+namedOne.lastName  // -> "Wang"
+namedOne.fullName  // -> "Naomi Wang"
+
+namedOne.firstName = "John"
+namedOne.firstName // -> "John"
+namedOne.lastName = "Doe"
+namedOne.lastName  // -> "Doe"
+
+namedOne.fullName;
 
 
 
 
 //========================================
+//closures and Scope
+function createFunctions(n) {
+  var callbacks = [];
+
+  for (var i=0; i<n; i++) {
+    (function(num){
+      callbacks.push(function() {
+      return num;
+      });
+    })(i);
+
+  }
+
+  return callbacks;
+}
 
 
-
+//"this" is an other solution
+function OnceNamedOne(first, last) {
+// -- SHOULD be changed --
+    this.firstName = first;
+    this.lastName = last;
+    this.fullName = this.firstName + ' ' + this.lastName;
+    return Object.freeze(this);
+}
 
 
 //========================================
+//Hex class
+
+function Hex(value){
+  //...
+
+  this.valueOf = function(){
+    var regx = /^0[xX][A-F-a-f]+/;
+    if (regx.test(value)){
+      return parseInt(value, 16);
+    }
+    return parseInt(value, 10);
+  };
+
+  this.toString = function(){
+     return "0x" + value.valueOf().toString(16).toUpperCase();
+   };
+
+  this.toJSON = function(){
+    return "0x" + value.valueOf().toString(16).toUpperCase();
+  };
+
+  this.plus = function(m){
+    return "0x" + (value.valueOf() + m.valueOf()).toString(16).toUpperCase();
+  };
+
+  this.minus = function(m){
+      return "0x" + (value.valueOf() - m.valueOf()).toString(16).toUpperCase();
+  };
+
+}
+
+Hex.parse = function(string){
+  var regx = /^0[xX][A-F-a-f]+/;
+  if (regx.test(string)){
+    return parseInt(string, 16);
+  }else {
+    return parseInt(("0x" + string), 16);
+  }
+};
+
+FF = new Hex(31);
+
+FF.toString(); // "0xFF"
+FF + 1; // 256
+FF.toJSON(); //"0xFF"
+FF.minus(1).toString(); // "0xFE"
+FF.minus(FF).valueOf() == 0; // "Should be zero"
+new Hex(10).plus(5).toString(); // "0xF"
+
+Hex.parse("FF"); //255
+Hex.parse("0xFF"); //255
+
+var regx = /^0[xX][A-F-a-f]+/;
+regx.test("FF");
+
+parseInt("0x1F", 16);
+
+//===========================
+//Closest pair of points
+
+// Calculate a pair of closest points
+function closestPair( points ){
+  var arr = points.slice(0);
+      minDistance = 0,
+      minDistancePair = [];
+      curDistance = 0;
+
+  for (var i = 0; i < arr.length - 1; i++){
+    for (var j = i + 1; j < arr.length; j++){
+      curDistance = distanceBetweenTwoPoints(arr[i], arr[j]);
+      if (minDistance > curDistance){
+        minDistance = curDistance;
+        minDistancePair = [arr[i], arr[j]];
+      }
+    }
+  }
+
+  return minDistancePair;
+}
+
+function distanceBetweenTwoPoints([x1, y1], [x2, y2]){
+  return Math.sqrt((x2-x1)(x2-x1) + (y2-y1)(y2-y1));
+}
 
 
 
+//========================
+//REach Me and Sum
+function sumDigNthTerm(initval, patternl, nthterm) {
+    var count = 1, curVal = initval, i = 0;
+    while (count < nthterm) {
+      curVal += patternl[i];
+      console.log(curVal);
+      count++;
+      if (i === patternl.length - 1){
+        i = 0;
+      }else {
+        i++;
+      }
+    }
+    return curVal.toString().split('').reduce(function(sum, d){
+      return sum + parseInt(d);
+    }, 0);
+}
+
+sumDigNthTerm(10, [2, 1, 3], 6);
 
 
-//========================================
 
