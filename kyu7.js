@@ -549,8 +549,13 @@ function filterWords(phrase){
 }
 
 filterWords("You're Bad! timmy!")
-//========================================
 
+//========================================
+//Greed
+var reg = /".+"/g;
+function getQuotes(string) {
+  return string.match(reg);
+}
 
 
 //========================================

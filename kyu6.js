@@ -332,7 +332,7 @@ function distanceBetweenTwoPoints([x1, y1], [x2, y2]){
 
 
 //========================
-//REach Me and Sum
+//Reach Me and Sum
 function sumDigNthTerm(initval, patternl, nthterm) {
     var count = 1, curVal = initval, i = 0;
     while (count < nthterm) {
@@ -351,6 +351,113 @@ function sumDigNthTerm(initval, patternl, nthterm) {
 }
 
 sumDigNthTerm(10, [2, 1, 3], 6);
+
+//============================
+//Shortest code:bug in apple
+function sc1(apple){
+  var i,j, l=apple.length;
+  for(i=0; i<l; i++){
+    for (j=0; j<apple[i].length; j++){
+      if (apple[i][j] === "B") return [i, j];
+    }
+  }
+}
+
+function sc2(a){
+  for (var i in a){
+    for (var j in a[i]){
+      if (a[i][j] === "B") return [+i, +j];
+    }
+  }
+}
+
+function sc(a){
+  var i, j;
+  for (i in a){
+    j = a[i].indexOf("B");
+    if (j >= 0) return [+i, +j];
+  }
+}
+
+//====================
+//Get All Possible Anagrams from a Hash
+function getWords(hash){
+  var letters = [], combination = [], result = [];
+  for (var key in hash){
+    var i = parseInt(key);
+    while (i > 0){
+      letters.concat(hash[key]);
+      i--;
+    }
+  }
+  combination = anagram(letters);
+  for (var i = 0; i < combination.length; i++){
+    while (combination[i] === combination[i+1]){
+      i++;
+    }
+    result.push(combination[i]);
+  }
+}
+
+function anagram(arr){
+  var i, j, item, newArr, result = [];
+  for (i=0; i<arr.length; i++){
+    item = arr[i];
+    newArr = arr.slice(0);
+    newArr.splice(i, 1);
+    console.log(newArr);
+    for (j=0; j<=newArr.length; j++){
+      newArr.splice(j, 0, item);
+      console.log(newArr);
+      result.push(newArr.sort().join(""));
+    }
+  }
+  console.log(result);
+  return result;
+}
+
+anagram(["a", "b", "c"]);
+
+
+//========================
+//Needles in a haystack
+function search(haystack, needle) {
+  var result = [];
+  var regx = new RegExp(needle);
+  for (var key in haystack){
+    if (typeof haystack[key] == "object"){
+      result.concat(search(haystack[key], needle));
+    }else {
+      if (regx.test(haystack[key])){
+          result.push(key);
+       }
+    }
+    //JSON.stringify(result);
+  }
+  return result.sort();
+}
+
+var obj = {
+  site: "Codewars",
+  description: "Lorem ipsum dolor sit...",
+  obj2: {
+    str: "Yeah, Codewars!",
+    num: 123,
+    obj3: {
+      something: "Ph'nglui mglw'nafh Codewars R'lyeh wgah'nagl fhtagn.Gotha fm'latgh h'gof'nn, geb chtenff"
+    }
+  }
+};
+
+var results = search(obj.obj2.obj3, "Codewars");
+console.log(results);
+
+console.log(typeof obj.obj2 == "object");
+//results = ["obj2.obj3.something", "obj2.str", "site"]
+
+
+
+
 
 
 
