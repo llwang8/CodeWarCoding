@@ -245,7 +245,7 @@ function OnceNamedOne(first, last) {
 
 
 //========================================
-//Hex class
+//Hex class  ???
 
 function Hex(value){
   //...
@@ -304,8 +304,7 @@ parseInt("0x1F", 16);
 
 //===========================
 //Closest pair of points
-
-// Calculate a pair of closest points
+// Calculate a pair of closest points  ???
 function closestPair( points ){
   var arr = points.slice(0);
       minDistance = 0,
@@ -380,7 +379,7 @@ function sc(a){
 }
 
 //====================
-//Get All Possible Anagrams from a Hash
+//Get All Possible Anagrams from a Hash   ???
 function getWords(hash){
   var letters = [], combination = [], result = [];
   for (var key in hash){
@@ -397,6 +396,7 @@ function getWords(hash){
     }
     result.push(combination[i]);
   }
+  return result;
 }
 
 function anagram(arr){
@@ -420,12 +420,14 @@ anagram(["a", "b", "c"]);
 
 
 //========================
-//Needles in a haystack
+//Needles in a haystack  ???
 function search(haystack, needle) {
   var result = [];
   var regx = new RegExp(needle);
   for (var key in haystack){
+    console.log("key:" + key);
     if (typeof haystack[key] == "object"){
+      console.log(search(haystack[key], needle));
       result.concat(search(haystack[key], needle));
     }else {
       if (regx.test(haystack[key])){
@@ -457,7 +459,24 @@ console.log(typeof obj.obj2 == "object");
 
 
 
+//============================
+//Paths in the Grid
+function numberOfRoutes(m, n){
+  var i = 0, j = 0, count = 0;
 
+  while (i <= m || j <=n ) {
+    if (i <= m){
+      i++;
+      count++;
+    }
+    if (j <= n){
+      j++;
+      count++;
+    }
 
+  }
+  return count;
+}
 
+numberOfRoutes(1, 1);
 
