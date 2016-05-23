@@ -523,33 +523,106 @@ function checkValidTrNumber(n) {
 //===============================
 //Most improved - Puzzles #4
 function calculateImproved(students){
-   for (var student in students){
-      student.improvement = calcuteImpFromMarks(student.marks);
-      delete student.marks;
+   var newStudents = [], j;
+   if (!students){
+    return [];
    }
 
-   return students.sort(function(stuA, stuB){
-     return stuA.improvement - stuB.improvement;
+   for (var i=0; i<students.length; i++){
+      student = students[i];
+      student.improvement = calcuteImpFromMarks(student.marks);
+      delete student.marks;
+      //console.log(student);
+   }
+
+   students.sort(function(stuA, stuB){
+     if (stuA.improvement != stuB.improvement) {
+        return stuB.improvement - stuA.improvement;
+     }
    });
+
+   for (i=0; i<=students.length-2; i++){
+      j = i;
+      while (i<students.length-1 && students[i].improvement == students[i+1].improvement){
+        i++;                  //watch for i not over limit
+      }
+      if(j !== i){
+        sortAlphabet(j, i);
+      }
+   }
+
+  function sortAlphabet(m, n){
+    for (var p=m; p<=n; p++){
+      for (var q=p+1; q<=n; q++){
+        //console.log("p: " + students[p].name)
+        //console.log("q: " + students[q].name)
+        //console.log(students[p].name > students[q].name);
+        if (students[p].name > students[q].name){// sort by obj.name
+          swap(p, q);
+        }
+      }
+    }
+  }
+
+  function swap(a, b){
+    temp = students[a];
+    students[a] = students[b];
+    students[b] = temp;
+  }
+
+  return students;
+
 }
 
 function calcuteImpFromMarks(arr){
   var result = 0;
-  if (!arr || arr[0] === 0 || !arr[-1]) {
+  if (!arr || arr[0] === 0 || arr[0] === null) { //watch for null, 0
     result = 0;
+  }else {
+    if (!arr[arr.length - 1]){
+      arr[arr.length - 1] = 0;
+    }
+    result = (arr[arr.length - 1] - arr[0]) / arr[0] * 100;
   }
-  result = (arr[-1] - arr[0]) / arr[0] * 100;
-  return result;
+
+  return Math.round(result);
 }
 
 
 
+function Student(name, marks){
+  this.name = name;
+  this.marks = marks;
+}
 
+var names = ['Henry, Johns',
+    'Timmy, Bug', 'George, King',
+    'Finn, Wish', 'Lucy Act'],
+    marks = [[0,100],[0,9],
+    [0,0],[0,76],[0,null]];
 
+var students = [];
+for(var i=0;i<5;i++){
+    students.push(new Student(names[i],marks[i]));
+}
 
+calculateImproved(students);
 
+///test
+function calcuteImpFromMarks(arr){
+  var result = 0;
+  if (!arr || arr[0] === 0 || !arr[arr.length - 1]) {
+    result = 0;
+  }else {
+    result = (arr[arr.length - 1] - arr[0]) / arr[0] * 100;
+  }
+  return Math.round(result);
+}
 
-
+var marks = [[0,100],[0,9], [0,0],[0,76],[0,null]];
+for (var j=0; j<5; j++){
+  console.log(j + ": " + calcuteImpFromMarks(marks[j]));
+}
 
 
 
