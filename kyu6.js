@@ -460,23 +460,96 @@ console.log(typeof obj.obj2 == "object");
 
 
 //============================
-//Paths in the Grid
+//Paths in the Grid  ???
 function numberOfRoutes(m, n){
   var i = 0, j = 0, count = 0;
 
   while (i <= m || j <=n ) {
-    if (i <= m){
-      i++;
-      count++;
-    }
-    if (j <= n){
-      j++;
-      count++;
-    }
+
 
   }
   return count;
 }
 
 numberOfRoutes(1, 1);
+
+//=================
+//Is Integer Array
+function isIntArray(arr) {
+  var result = true;
+  if (!arr){
+    return false;
+  }
+  arr.forEach(function(item){
+    if (isNaN(item) || !Number.isInteger(item)){
+      result = false;
+    }
+  });
+  return result;
+}
+
+isIntArray([1, 2, 3, NaN]);
+
+
+//=================
+//Turkish National Identity Number
+
+function checkValidTrNumber(n) {
+  var str = n.toString(), i, sumOdd=0, sumEven=0, calTen, calEleven;
+  if (str.length != 11){
+    return false;
+  }
+  if (str[0] === "0"){
+    return false;
+  }
+  for (i=0; i<=8; i+=2){
+    sumOdd += +str[i];
+  }
+  for (i=1; i<=7; i+=2){
+    sumEven += +str[i];
+  }
+  calTen = (sumOdd * 7 - sumEven) % 10;
+  if (str[9] != calTen) {
+    return false;
+  }
+  calEleven = (sumOdd + sumEven + calTen) % 10;
+  if (str[10] != calEleven){
+    return false;
+  }
+  return true;
+
+}
+
+//===============================
+//Most improved - Puzzles #4
+function calculateImproved(students){
+   for (var student in students){
+      student.improvement = calcuteImpFromMarks(student.marks);
+      delete student.marks;
+   }
+
+   return students.sort(function(stuA, stuB){
+     return stuA.improvement - stuB.improvement;
+   });
+}
+
+function calcuteImpFromMarks(arr){
+  var result = 0;
+  if (!arr || arr[0] === 0 || !arr[-1]) {
+    result = 0;
+  }
+  result = (arr[-1] - arr[0]) / arr[0] * 100;
+  return result;
+}
+
+
+
+
+
+
+
+
+
+
+
 
