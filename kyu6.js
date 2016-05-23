@@ -608,21 +608,41 @@ for(var i=0;i<5;i++){
 
 calculateImproved(students);
 
-///test
-function calcuteImpFromMarks(arr){
-  var result = 0;
-  if (!arr || arr[0] === 0 || !arr[arr.length - 1]) {
-    result = 0;
-  }else {
-    result = (arr[arr.length - 1] - arr[0]) / arr[0] * 100;
+//=====================================
+//Who won the election?
+
+function getWinner(listOfBallots) {
+  var i, max=0,
+      maxKey = "",
+      arr = listOfBallot.slice(0),
+      ballotObj = {},
+      limit = arr.length / 2;
+
+  if(!arr){
+    return null;
   }
-  return Math.round(result);
+
+  for (i=0; i<arr.length; i++){
+    if(ballotObj[arr[i]]){
+      ballotObj[arr[i]]++;
+    }else{
+      ballotObj[arr[i]] = 1;
+  }
+  JSON.stringify(ballotObj);
+
+  for (var key in ballotObj){
+    if (max < ballotObj[key]){
+      max = ballotObj[key];
+      maxKey = key;
+  }
+
+  if (max > limit){
+    return maxKey;
+  }else {
+    return null;
+  }
+
 }
 
-var marks = [[0,100],[0,9], [0,0],[0,76],[0,null]];
-for (var j=0; j<5; j++){
-  console.log(j + ": " + calcuteImpFromMarks(marks[j]));
-}
-
-
+getWinner(["A", "A", "A", "B", "C", "B"]);
 
