@@ -716,22 +716,95 @@ Dragon(1);
 //console.log('FaRbFR'.replace(regx, function(match){
 //  return (match === 'a') ? 'aRbFR' : 'LFaLb';
 //}));
-var str='Fa', regx = /a|b/g;
-str.replace(regx, "");
 
 //===========================
 //Integers: Recreation One
 
 function listSquared(m, n) {
-    // your code
+    var result = [], sumOfSq;
+    for (var i = m; i <= n; i++){
+        sumOfDivSq = sumOfDivisorsSquares(i);
+        if(Number.isInteger(Math.sqrt(sumOfDivSq))){
+          result.push([i, sumOfDivSq]);
+        }
+    }
+    return result;
 }
 
-function findDivisors(num){
-
+function sumOfDivisorsSquares(num){
+  var divisorsArr = [];
+  for (var i = 1; i <= num; i++){
+    if (num % i === 0){
+      divisorsArr.push(i);
+    }
+  }
+  console.log(divisorsArr);
+  return divisorsArr.reduce(function(sum, cur){
+    return sum + cur * cur;
+  }, 0);
 }
 
-function sumOfSquares(arr){
-  for ()
-}
+listSquared(1, 250);
+
+
+//==========================
+//
+
+
+
+//==========================
+//
+
+
+
+
+//==========================
+//
+
+
+
+
+//==========================
+//
+
+
+
+//==========================
+//
+
+
+
+//==========================
+//
+
+
+
+//==========================
+//
+
+
+
+//==========================
+//
+
+
+
+//==========================
+//
+
+
+
+//==========================
+//
+
+
+
+//==========================
+//
+
+
+
+//==========================
+//
 
 
