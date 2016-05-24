@@ -614,7 +614,7 @@ calculateImproved(students);
 function getWinner(listOfBallots) {
   var i, max=0,
       maxKey = "",
-      arr = listOfBallot.slice(0),
+      arr = listOfBallots.slice(0),
       ballotObj = {},
       limit = arr.length / 2;
 
@@ -623,17 +623,21 @@ function getWinner(listOfBallots) {
   }
 
   for (i=0; i<arr.length; i++){
+    console.log(arr[i]);
     if(ballotObj[arr[i]]){
       ballotObj[arr[i]]++;
     }else{
       ballotObj[arr[i]] = 1;
+    }
   }
+
   JSON.stringify(ballotObj);
 
   for (var key in ballotObj){
     if (max < ballotObj[key]){
       max = ballotObj[key];
       maxKey = key;
+    }
   }
 
   if (max > limit){
@@ -645,4 +649,89 @@ function getWinner(listOfBallots) {
 }
 
 getWinner(["A", "A", "A", "B", "C", "B"]);
+
+getWinner2(list){
+  var result = {};
+  var winNum = list.length / 2;
+  list.forEach(function(char){
+    ++result[char] || result[char] = 1;
+  });
+  var answer = Object.keys(result).filter(funciton(key){
+    if (result[key] > winNum){
+      return key;
+    }
+  });
+  return answer[0] || null;
+}
+
+//==========================
+//Dragon's Curve
+
+Dragon2 = function(n) {
+  var str= 'Fa', regx = /a|b/g;
+
+  if (isNaN(n) || typeof n === 'undefined' || !Number.isInteger(n) || n < 0){
+    return "";
+  }
+
+  while(n > 0){                               //iterative
+    str = str.replace(regx, function(match){
+      return (match === 'a') ? 'aRbFR' : 'LFaLb';
+    });
+    n--;
+  }
+
+  return str.replace(regx, "");
+
+}
+
+Dragon = function(n, str) {
+  var regx = /a|b/g;
+  str = str || 'Fa';
+
+  if (isNaN(n) || typeof n === 'undefined' || !Number.isInteger(n) || n < 0){
+    return "";
+  }
+
+  if (n === 0){
+    return str.replace(regx, "");
+  }else {
+    str = str.replace(regx, function(match){
+      return (match === 'a') ? 'aRbFR' : 'LFaLb';
+    });
+
+    return Dragon(n - 1, str);      //recursive
+  }
+
+}
+
+Dragon(1);
+
+
+//test
+//replace 'a' with: 'aRbFR'
+//replace 'b' with: 'LFaLb'
+
+//var regx = /a|b/g;
+//console.log('FaRbFR'.replace(regx, function(match){
+//  return (match === 'a') ? 'aRbFR' : 'LFaLb';
+//}));
+var str='Fa', regx = /a|b/g;
+str.replace(regx, "");
+
+//===========================
+//Integers: Recreation One
+
+function listSquared(m, n) {
+    // your code
+}
+
+function findDivisors(num){
+
+}
+
+function sumOfSquares(arr){
+  for ()
+}
+
 
