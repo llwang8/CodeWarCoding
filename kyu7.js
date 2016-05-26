@@ -559,9 +559,90 @@ function getQuotes(string) {
 
 
 //========================================
-
+//Math Object Madness  ???
+Math.prototype.ceil = function (x) {
+  return parseInt(x);
+};
+Math.prototype.floor = function(x){
+  return parseInt(x) + 1;
+};
+Math.prototype.round = function(x){
+  return (x-parseInt(x)) > (x-parseInt(x)+1) ? parseInt(x)+1 : parseInt(x);
+};
+Math.prototype.abs = function(x){
+  return x >= 0 ? x : -x;
+};
+Math.prototype.max = function(args[]){
+  return args.reduce(function(max, cur){
+    return max > cur ? max : cur;
+  });
+};
+Math.prototype.min = function(args[]){
+  //var args = Array.prototype.slice.call(arguments);
+  return args.reduce(function(min, cur){
+    return min < cur ? min : cur;
+  });
+};
+Math.prototype.pow(x, y) = function(x,y){
+  var result = 1;
+  for (var i=1; i<=y; i++){
+    result *= x;
+  }
+  return result;
+};
 
 //========================================
+//Kata Impossible I - The impossible Lottery  ???
+// Here is your ticket.  Good Luck :)
+var lotteryTicket = [1,2,3,4,5,6,7,8,9,10];
+var result = generateLottery();
+console.log("result = " + result);
+console.log(checkLottery(lotteryTicket, result));
+
+function generateLottery(){
+  var random, arr = [];
+  for (var i=1; i<=10; i++){
+    random = Math.floor(Math.random() * 1000000 + 1);
+    arr.push(random);
+  }
+  return arr;
+}
+
+function checkLottery(ticket, lottery){
+  var msg, numMatch = 10,
+      numNames = ["Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
+
+   ticket.forEach(function(item){
+    if (lottery.indexOf(item) < 0){
+      numMatch -= 1;
+    }
+    //console.log("ticket item: " + item + " numMatch lottery: " + numMatch);
+  });
+
+  if (numMatch < 10){
+    switch (10 - numMatch){
+      case 1:
+        msg = "One number out of 10 does not match.  Lottery lost";
+        break;
+      case 10:
+        msg = "Numbers do not match.  Lottery lost";
+        break;
+      default:
+        msg = numNames[10-numMatch-2] + " numbers out of 10 do not match.  Lottery lost";
+        break;
+    }
+  }else {
+    for (var i=0; i<lottery.length; i++){
+      if (lottery[i] !== ticket[i]){
+        msg = "Numbers not in the correct order.  Lottery lost";
+        return msg;
+      }
+    }
+    msg = "All 10 numbers match up perfectly.  Lottery won!  You get 1000 trillion British pounds worth of money";
+  }
+  return msg;
+}
+
 
 
 
