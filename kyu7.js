@@ -347,43 +347,6 @@ function buildFun(n){
 
 buildFun(5);
 
-
-//========================================
-//Math Object Madness
-
-Math.prototype.ceil = function (x) {
-  return parseInt(x);
-};
-Math.prototype.floor = function(x){
-  return parseInt(x) + 1;
-};
-Math.prototype.round = function(x){
-  return (x-parseInt(x)) > (x-parseInt(x)+1) ? parseInt(x)+1 : parseInt(x);
-};
-Math.prototype.abs = function(x){
-  return x >= 0 ? x : -x;
-};
-Math.prototype.max = function(args[]){
-  return args.reduce(function(max, cur){
-    return max > cur ? max : cur;
-  });
-};
-Math.prototype.min = function(args[]){
-  //var args = Array.prototype.slice.call(arguments);
-  return args.reduce(function(min, cur){
-    return min < cur ? min : cur;
-  });
-};
-Math.prototype.pow(x, y) = function(x,y){
-  var result = 1;
-  for (var i=1; i<=y; i++){
-    result *= x;
-  }
-  return result;
-};
-
-
-
 //========================================
 // Algorithmic predicament - Bug Fixing #9
 
@@ -561,23 +524,23 @@ function getQuotes(string) {
 //========================================
 //Math Object Madness  ???
 Math.prototype.ceil = function (x) {
-  return parseInt(x);
+  return x % 1 === 0 ? x : x - x % 1 + 1;
 };
 Math.prototype.floor = function(x){
-  return parseInt(x) + 1;
+  return x - x % 1;
 };
 Math.prototype.round = function(x){
-  return (x-parseInt(x)) > (x-parseInt(x)+1) ? parseInt(x)+1 : parseInt(x);
+  return x % 1 === 0 ? x : x - x % 1 + (x%1 >= 0.5 ? 1 : 0)
 };
 Math.prototype.abs = function(x){
   return x >= 0 ? x : -x;
 };
-Math.prototype.max = function(args[]){
+Math.prototype.max = function(...args){
   return args.reduce(function(max, cur){
     return max > cur ? max : cur;
   });
 };
-Math.prototype.min = function(args[]){
+Math.prototype.min = function(...args){
   //var args = Array.prototype.slice.call(arguments);
   return args.reduce(function(min, cur){
     return min < cur ? min : cur;
