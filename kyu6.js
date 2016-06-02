@@ -421,7 +421,7 @@ anagram(["a", "b", "c"]);
 
 //========================
 //Needles in a haystack  ???
-function search(haystack, needle) {
+function search2(haystack, needle) {
   var result = [];
   var regx = new RegExp(needle);
   for (var key in haystack){
@@ -438,6 +438,20 @@ function search(haystack, needle) {
   }
   return result.sort();
 }
+
+function search(haystack, needle, path) {
+  return Object.keys(haystack || {}).reduce(function(p, k){
+    var v = haystack[k], np = (path || []).concat(k);
+    var arr = typeof v == 'string' && v.indexOf(needle) > -1
+      ? [np.join('.')]
+      : typeof v == 'object'
+        ? search(v, needle, np)
+        : [];
+    return p.concat(arr);
+  }, []).sort();
+}
+
+
 
 var obj = {
   site: "Codewars",
